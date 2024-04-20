@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+      <!-- Jquery CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+      <!-- Bootstrap 5 CDN -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="page creator" content="Nghia Duong">
+      <meta name="author" content="Alex Rovira, Fernando Trias de Bes">
+      <meta name="book name" content="Bí mật của may mắn">
+      <meta name="description"
+            content="Bí Mật của May Mắn kể về một câu chuyện đầy cảm động giữa hai ông già, Max và Jim, khi họ tình cờ gặp nhau ở công viên trong tâm sau 50 năm xa cách. Trong khi Max đạt được những thành công và hạnh phúc tràn đầy trong cuộc đời từ sự khởi đầu vô cùng khó khăn, từ hai bàn tay trắng, thì Jim lại không thể làm được điều đó, lúc khởi đầu ông đã được cuộc sống ưu đãi rất nhiều.
+            Bí quyết thành công và may mắn của Max nằm ở câu chuyện kỳ diệu mà người ông đã kể lại cho Max từ nhiều năm trước.">
+      <title>Bí mật của may mắn</title>
+      <link rel="icon" type="image/png" href="favicon.png">
+      <link rel="stylesheet" href="style.css">
+</head>
+
+<body class='position-relative'>
+      <div class="toast-container position-absolute top-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                        <strong class="me-auto">Thông báo</strong>
+                        <small>Mới đây</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                        <p>Đã mua sách thành công!</p>
+                        <a href="" id="book-link">Link sách</a>
+                  </div>
+            </div>
+      </div>
+      <div class="w-100 h-100 d-flex align-items-center">
+            <div class="container bg-light rounded p-3 d-flex flex-column justify-content-center">
+                  <div class="row justify-content-center align-items-center">
+                        <div class="col-12 col-md-5 d-flex flex-column justify-content-center align-items-center">
+                              <img src="https://cdn0.fahasa.com/media/catalog/product/i/m/image_89665.jpg"
+                                    class="rounded img-size" alt="Hình ảnh của sách Bí mật của may mắn">
+                        </div>
+                        <form method="post" action='/create-payment' class="col-12 col-md-7 mt-md-0 mt-3">
+                              <h1>Bí Mật Của May Mắn</h1>
+                              <p>Tác giả: Alex Rovira, Fernando Trias de Bes</p>
+                              <p>Thể loại: Kỹ năng sống</p>
+                              <p>Nhà xuất bản: Công ty First News - Trí Việt</p>
+                              <p>Năm xuất bản: 2005</p>
+                              <p>Giá bán: <strong>10000đ</strong></p>
+                              <button type='submit' class='btn btn-primary mt-3' onclick="buy()">
+                                    <i class='bi bi-cart4'></i>
+                                    Mua ngay
+                              </button>
+                        </form>
+                  </div>
+            </div>
+      </div>
+      <script>
+            const params = new URLSearchParams(window.location.search);
+            $.ajax({
+                  url: '/get-book',
+                  type: 'GET',
+                  dataType: 'json',
+                  data: { orderCode: params.get('orderCode') },
+                  success: function (response)
+                  {
+                        $('#book-link').attr('href', response.data);
+                        const toastLiveExample = document.getElementById("liveToast");
+                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+                        toastBootstrap.show();
+                  }
+            });
+      </script>
+</body>
+
+</html>
